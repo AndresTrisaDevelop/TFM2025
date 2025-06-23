@@ -1,0 +1,179 @@
+[
+    {
+      "Model": "Random Forest Classifier",
+      "Accuracy": 0.8691,
+      "AUC": 0.9542,
+      "Recall": 0.8691,
+      "Prec.": 0.8580,
+      "F1": 0.8622,
+      "Kappa": 0.7504,
+      "MCC": 0.7521,
+      "TT (Sec)": 10.8110
+    },
+    {
+      "Model": "Decision Tree Classifier",
+      "Accuracy": 0.8684,
+      "AUC": 0.8989,
+      "Recall": 0.8684,
+      "Prec.": 0.8679,
+      "F1": 0.8680,
+      "Kappa": 0.7588,
+      "MCC": 0.7588,
+      "TT (Sec)": 0.5470
+    },
+    {
+      "Model": "Extra Trees Classifier",
+      "Accuracy": 0.8667,
+      "AUC": 0.9401,
+      "Recall": 0.8667,
+      "Prec.": 0.8586,
+      "F1": 0.8608,
+      "Kappa": 0.7494,
+      "MCC": 0.7501,
+      "TT (Sec)": 55.5590
+    },
+    {
+      "Model": "Extreme Gradient Boosting",
+      "Accuracy": 0.8500,
+      "AUC": 0.9554,
+      "Recall": 0.8500,
+      "Prec.": 0.8361,
+      "F1": 0.8348,
+      "Kappa": 0.7016,
+      "MCC": 0.7088,
+      "TT (Sec)": 12.9270
+    },
+    {
+      "Model": "Light Gradient Boosting Machine",
+      "Accuracy": 0.8491,
+      "AUC": 0.9535,
+      "Recall": 0.8491,
+      "Prec.": 0.8357,
+      "F1": 0.8333,
+      "Kappa": 0.6973,
+      "MCC": 0.7050,
+      "TT (Sec)": 9.4300
+    },
+    {
+      "Model": "CatBoost Classifier",
+      "Accuracy": 0.8451,
+      "AUC": 0.9355,
+      "Recall": 0.8451,
+      "Prec.": 0.8333,
+      "F1": 0.8329,
+      "Kappa": 0.6779,
+      "MCC": 0.6855,
+      "TT (Sec)": 113.3130
+    },
+    {
+      "Model": "Gradient Boosting Classifier",
+      "Accuracy": 0.8204,
+      "AUC": 0.8204,
+      "Recall": 0.8204,
+      "Prec.": 0.7896,
+      "F1": 0.7896,
+      "Kappa": 0.6235,
+      "MCC": 0.6480,
+      "TT (Sec)": 97.4400
+    },
+    {
+      "Model": "K Neighbors Classifier",
+      "Accuracy": 0.7386,
+      "AUC": 0.8381,
+      "Recall": 0.7386,
+      "Prec.": 0.7286,
+      "F1": 0.7234,
+      "Kappa": 0.4348,
+      "MCC": 0.4593,
+      "TT (Sec)": 0.9290
+    },
+    {
+      "Model": "Ada Boost Classifier",
+      "Accuracy": 0.7360,
+      "AUC": 0.7996,
+      "Recall": 0.7360,
+      "Prec.": 0.7149,
+      "F1": 0.7102,
+      "Kappa": 0.4301,
+      "MCC": 0.4531,
+      "TT (Sec)": 19.3900
+    },
+    {
+      "Model": "Ridge Classifier",
+      "Accuracy": 0.7293,
+      "AUC": 0.0000,
+      "Recall": 0.7293,
+      "Prec.": 0.7281,
+      "F1": 0.7232,
+      "Kappa": 0.4091,
+      "MCC": 0.4152,
+      "TT (Sec)": 0.4690
+    },
+    {
+      "Model": "Linear Discriminant Analysis",
+      "Accuracy": 0.7277,
+      "AUC": 0.0000,
+      "Recall": 0.7277,
+      "Prec.": 0.7277,
+      "F1": 0.7215,
+      "Kappa": 0.4050,
+      "MCC": 0.4116,
+      "TT (Sec)": 0.4600
+    },
+    {
+      "Model": "Quadratic Discriminant Analysis",
+      "Accuracy": 0.6878,
+      "AUC": 0.0000,
+      "Recall": 0.6873,
+      "Prec.": 0.6579,
+      "F1": 0.6548,
+      "Kappa": 0.3555,
+      "MCC": 0.3716,
+      "TT (Sec)": 0.5290
+    },
+    {
+      "Model": "Logistic Regression",
+      "Accuracy": 0.6481,
+      "AUC": 0.0000,
+      "Recall": 0.6481,
+      "Prec.": 0.5303,
+      "F1": 0.5577,
+      "Kappa": 0.1202,
+      "MCC": 0.1672,
+      "TT (Sec)": 34.3430
+    },
+    {
+      "Model": "Dummy Classifier",
+      "Accuracy": 0.6277,
+      "AUC": 0.0000,
+      "Recall": 0.6277,
+      "Prec.": 0.4007,
+      "F1": 0.4431,
+      "Kappa": 0.0000,
+      "MCC": 0.0337,
+      "TT (Sec)": 0.4600
+    },
+    {
+      "Model": "Naive Bayes",
+      "Accuracy": 0.6217,
+      "AUC": 0.0000,
+      "Recall": 0.6217,
+      "Prec.": 0.4374,
+      "F1": 0.4625,
+      "Kappa": 0.0231,
+      "MCC": 0.0689,
+      "TT (Sec)": 1.0130
+    },
+    {
+      "Model": "SVM - Linear Kernel",
+      "Accuracy": 0.4248,
+      "AUC": 0.0000,
+      "Recall": 0.4248,
+      "Prec.": 0.4516,
+      "F1": 0.4015,
+      "Kappa": -0.0262,
+      "MCC": 0.0237,
+      "TT (Sec)": 2.1610
+    }
+  ]
+  

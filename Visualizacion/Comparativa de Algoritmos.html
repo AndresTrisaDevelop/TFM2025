@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Comparación de Algoritmos ML</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>🚀 Dashboard de Comparación de Algoritmos ML</h1>
+            <p>Análisis Comparativo para Predicción de Flujo de Efectivo Usando Algoritmos de Clasificación</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>Mejor Accuracy</h3>
+                <div class="metric-value" id="bestAccuracy">0.8667</div>
+                <small>Decission Tree</small>
+            </div>
+            <div class="metric-card">
+                <h3>Mejor AUC</h3>
+                <div class="metric-value" id="bestAUC">0.9542</div>
+                <small>Random Forest</small>
+            </div>
+            <div class="metric-card">
+                <h3>Mejor F1</h3>
+                <div class="metric-value" id="bestF1">0.8622</div>
+                <small>Extra Trees</small>
+            </div>
+            <div class="metric-card">
+                <h3>Mejor Kappa</h3>
+                <div class="metric-value" id="bestKappa">0.7504</div>
+                <small>Decission Tree</small>
+                
+            </div>
+            <div class="metric-card">
+                <h3>Mejor Tiempo</h3>
+                <div class="metric-value" id="bestKappa">0.4600</div>
+                <small>LDL</small>
+                
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="metric-selector" onclick="updateCharts('accuracy')">🎯 Accuracy</button>
+            <button class="metric-selector" onclick="updateCharts('auc')">📈 AUC</button>
+            <button class="metric-selector" onclick="updateCharts('f1')">📊 F1-Score</button>
+            <button class="metric-selector" onclick="updateCharts('kappa')">⚖️ Kappa</button>
+            <button class="metric-selector" onclick="updateCharts('time')">⏱️ Tiempo</button>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>📊 Comparación de Rendimiento por Algoritmo</h3>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>🎯 Top 10 Algoritmos</h3>
+                <div class="chart-container">
+                    <canvas id="topAlgorithmsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3 style="margin-bottom: 20px; color: #333; text-align: center;">📋 Tabla Completa de Resultados</h3>
+            <table class="performance-table">
+                <thead>
+                    <tr>
+                        <th>Algoritmo</th>
+                        <th>Accuracy</th>
+                        <th>AUC</th>
+                        <th>Recall</th>
+                        <th>Precision</th>
+                        <th>F1</th>
+                        <th>Kappa</th>
+                        <th>MCC</th>
+                        <th>Tiempo (s)</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTable">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insights">
+            <h3>💡 Insights Clave del Análisis</h3>
+            <ul>
+                <li><strong>Mejor Rendimiento General:</strong> Random Forest y Extra Trees muestran el mejor balance entre precisión y robustez</li>
+                <li><strong>Eficiencia Computacional:</strong> Decision Tree ofrece el mejor tiempo de ejecución manteniendo alta precisión</li>
+                <li><strong>Robustez:</strong> Los métodos ensemble (RF, ET, XGBoost) superan consistentemente a los algoritmos individuales</li>
+                <li><strong>Recomendación:</strong> Random Forest es el algoritmo óptimo considerando rendimiento, estabilidad y interpretabilidad</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+        {model: 'Random Forest', accuracy: 0.8642, auc: 0.9542, recall: 0.8580, precision: 0.8622, f1: 0.7504, kappa: 0.7521, mcc: 0.7521, time: 10.8110},
+        {model: 'Decision Tree', accuracy: 0.8684, auc: 0.8989, recall: 0.8684, precision: 0.8684, f1: 0.7604, kappa: 0.7604, mcc: 0.7604, time: 0.5470},
+        {model: 'Extra Trees', accuracy: 0.8667, auc: 0.9401, recall: 0.8667, precision: 0.8596, f1: 0.8620, kappa: 0.7494, mcc: 0.7501, time: 55.5590},
+        {model: 'XGBoost', accuracy: 0.8500, auc: 0.9535, recall: 0.8500, precision: 0.8361, f1: 0.8348, kappa: 0.7016, mcc: 0.7088, time: 12.9270},
+        {model: 'LightGBM', accuracy: 0.8491, auc: 0.9535, recall: 0.8491, precision: 0.8351, f1: 0.8348, kappa: 0.6986, mcc: 0.7069, time: 9.4300},
+        {model: 'CatBoost', accuracy: 0.8451, auc: 0.9503, recall: 0.8451, precision: 0.8333, f1: 0.8275, kappa: 0.6879, mcc: 0.6975, time: 113.3130},
+        {model: 'Gradient Boosting', accuracy: 0.8204, auc: 0.0000, recall: 0.8204, precision: 0.8168, f1: 0.7980, kappa: 0.6235, mcc: 0.6440, time: 97.4400},
+        {model: 'K-Neighbors', accuracy: 0.7386, auc: 0.8381, recall: 0.7386, precision: 0.7164, f1: 0.7234, kappa: 0.4943, mcc: 0.4963, time: 0.9290},
+        {model: 'Ada Boost', accuracy: 0.7360, auc: 0.0000, recall: 0.7360, precision: 0.6680, f1: 0.6558, kappa: 0.3651, mcc: 0.4339, time: 19.3900},
+        {model: 'Ridge Classifier', accuracy: 0.7293, auc: 0.0000, recall: 0.7293, precision: 0.6022, f1: 0.6501, kappa: 0.3460, mcc: 0.4125, time: 0.4690},
+        {model: 'LDA', accuracy: 0.7277, auc: 0.0000, recall: 0.7277, precision: 0.6412, f1: 0.6583, kappa: 0.3560, mcc: 0.4131, time: 0.4600},
+        {model: 'QDA', accuracy: 0.6873, auc: 0.0000, recall: 0.6873, precision: 0.6579, f1: 0.6548, kappa: 0.3555, mcc: 0.3716, time: 0.5290},
+        {model: 'Logistic Regression', accuracy: 0.6481, auc: 0.0000, recall: 0.6481, precision: 0.5033, f1: 0.5577, kappa: 0.1202, mcc: 0.1547, time: 34.3430},
+        {model: 'Dummy Classifier', accuracy: 0.6471, auc: 0.5000, recall: 0.6471, precision: 0.4188, f1: 0.5085, kappa: 0.0000, mcc: 0.0000, time: 0.4600},
+        {model: 'Naive Bayes', accuracy: 0.6217, auc: 0.6602, recall: 0.6217, precision: 0.4725, f1: 0.5191, kappa: 0.0548, mcc: 0.0750, time: 1.0130},
+        {model: 'SVM', accuracy: 0.4248, auc: 0.0000, recall: 0.4248, precision: 0.4516, f1: 0.4015, kappa: 0.0262, mcc: 0.0237, time: 2.1610}
+      ];
+      
+
+        let currentChart = null;
+        let topChart = null;
+
+        function formatScore(score) {
+            if (score >= 0.85) return 'best-score';
+            if (score >= 0.75) return 'good-score';
+            return '';
+        }
+
+        function populateTable() {
+            const tbody = document.getElementById('resultsTable');
+            tbody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="model-name">${row.model}</td>
+                    <td><span class="${formatScore(row.accuracy)}">${row.accuracy.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.auc)}">${row.auc.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.recall)}">${row.recall.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.precision)}">${row.precision.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.f1)}">${row.f1.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.kappa)}">${row.kappa.toFixed(4)}</span></td>
+                    <td><span class="${formatScore(row.mcc)}">${row.mcc.toFixed(4)}</span></td>
+                    <td>${row.time.toFixed(4)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateCharts(metric) {
+            const top10 = [...data].sort((a, b) => b[metric] - a[metric]).slice(0, 10);
+            
+            if (currentChart) currentChart.destroy();
+            if (topChart) topChart.destroy();
+
+            const ctx1 = document.getElementById('performanceChart').getContext('2d');
+            const ctx2 = document.getElementById('topAlgorithmsChart').getContext('2d');
+
+            const colors = [
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384'
+            ];
+
+            currentChart = new Chart(ctx1, {
+                type: 'radar',
+                data: {
+                    labels: ['Accuracy', 'AUC', 'Recall', 'Precision', 'F1', 'Kappa'],
+                    datasets: top10.slice(0, 5).map((model, index) => ({
+                        label: model.model,
+                        data: [model.accuracy, model.auc, model.recall, model.precision, model.f1, model.kappa],
+                        borderColor: colors[index],
+                        backgroundColor: colors[index] + '20',
+                        pointBackgroundColor: colors[index],
+                        pointBorderColor: colors[index],
+                        pointHoverBackgroundColor: colors[index],
+                        pointHoverBorderColor: colors[index],
+                        pointRadius: 5,
+                        borderWidth: 2
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 1,
+                            ticks: {
+                                stepSize: 0.2
+                            }
+                        }
+                    }
+                }
+            });
+
+            topChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: top10.map(d => d.model),
+                    datasets: [{
+                        label: metric.toUpperCase(),
+                        data: top10.map(d => d[metric]),
+                        backgroundColor: colors.slice(0, 10),
+                        borderColor: colors.slice(0, 10),
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toFixed(2);
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        populateTable();
+        updateCharts('accuracy');
+    </script>
+</body>
+</html>
